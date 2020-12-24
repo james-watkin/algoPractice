@@ -6,7 +6,6 @@ const fib = (n, memo = {}) => {
     if(n <= 2) return 1;
 
     memo[n] = fib(n-1, memo) + fib(n-2, memo)
-    console.log(memo)
     return memo[n];  
 };
 
@@ -20,6 +19,23 @@ const fib = (n, memo = {}) => {
 // console.log(fib(10))
 
 
-const gridTraveler = (l,w) => {
-    
+const gridTraveler = (l,w, memo = {}) => {
+    if([l,w] in memo) return memo[[l,w]];
+    if(l === 1 && w === 1) return 1;
+    if(l === 0 || w === 0) return 0;
+
+    memo[[l,w]] = gridTraveler(l - 1, w, memo) + gridTraveler(l, w - 1, memo)
+    return memo[[l,w]]
+}
+
+// console.log(gridTraveler(1,1))
+// console.log(gridTraveler(2,3))
+// console.log(gridTraveler(3,2))
+// console.log(gridTraveler(3,3))
+// console.log(gridTraveler(18,18))
+
+
+// 7, [5,3,4,7] => true
+const canSun = (targetSum, number) => {
+
 }
