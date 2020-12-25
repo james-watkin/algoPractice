@@ -166,7 +166,13 @@ function flatten(data) {
 // fileFinder(desktop, 'everlong.flac');            // => true
 // fileFinder(desktop, 'sequoia.jpeg');             // => false
 function fileFinder(directories, targetFile) {
+    for(dir in directories){
+        if(targetFile === dir  || fileFinder(directories[dir], targetFile) === true ){
+            return true;
+        }
+    }
 
+    return false;
 }
 
 
