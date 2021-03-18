@@ -6,3 +6,7 @@ tabulation_project/node_modules
 sorting/bubble_sort_project/node_modules
 sorting/insertion_sort_project/node_modules
 sorting/selection_sort_project/node_modules
+
+graph_project/node_modules
+heaps_project/node_modules
+trie_project/node_modules
