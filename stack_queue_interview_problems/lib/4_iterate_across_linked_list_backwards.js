@@ -29,6 +29,25 @@
 function iterateAcrossLinkedListBackwards(linkedList) {
     // TODO: Implement the iterateAcrossLinkedListBackwards function here
 
+    let result = []
+
+    let currentNode = linkedList.head
+
+    // console.log(linkedList)
+    while(currentNode !== null){
+        if(currentNode.value === null){
+            result.unshift('null')
+        }else if( currentNode.value === undefined){
+            result.unshift('undefined')
+        }else{
+            result.unshift(currentNode.value)
+        }
+        
+        currentNode = currentNode.next
+    }
+
+    return result.join(' -> ')
+
 }
 
 exports.iterateAcrossLinkedListBackwards = iterateAcrossLinkedListBackwards;
