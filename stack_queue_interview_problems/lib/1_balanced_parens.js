@@ -76,7 +76,31 @@
 // Let's code!
 // -----------
 function balancedParens(str) {
+    let stack = []
 
+    let brackets = { '(':')', '[':']', '{':'}'}
+
+    for(let i = 0; i < str.length; i++){
+        let currEle = str[i]
+        
+        if(brackets[currEle]){
+            stack.push(currEle)
+        }else if( currEle === '}'){
+            if(currEle !== brackets[stack.pop()]){
+                return false;
+            }
+        }else if( currEle === ']'){
+            if(currEle !== brackets[stack.pop()]){
+                return false;
+            }
+        }else if( currEle === ')'){
+            if(currEle !== brackets[stack.pop()]){
+                return false;
+            }
+        }
+    }
+
+    return stack.length === 0
 }
 
 exports.balancedParens = balancedParens;
