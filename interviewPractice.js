@@ -44,6 +44,13 @@
 // console.log(Kadanes([3, 5, -9, 1, 3, -2, 3, 4, 7, 2, -9, 6, 1, 3,-5, 4]))
 // console.log(Kadanes([-2,-3,-4,-5,-6,-7,-8,-9,-10]))
 
+// console.log(longestPath( [  
+//     ['#', 1,  1,   1 ,  1],
+//     ['#','#', '#' '#',  1],
+//     [ 1,  1,  1, '#',  1],
+//     [ 1, '#',  1,  1,   1],
+//     [ 1,  1,  '#', '#','#']
+// ]))
 
 function longestPath(matrix){
     let startArray = new Array(matrix.length).fill().map( u => new Array(matrix[0].length).fill(null) )
@@ -51,10 +58,11 @@ function longestPath(matrix){
         let currentRow = startArray[i]
         for( let j = 0; j < currentRow.length; j++){
             let currentInMatrix = matrix[i][j]
+            if( currentInMatrix === 0 ) startArray[i][j] = 1
 
-            if( currentInMatrix === 0 ) startArray[i][j] = 1;
         }
     }
+    // console.log(startArray)
 
     for( let i = 0; i < startArray.length; i++){
         let currentRow = startArray[i]
@@ -86,34 +94,219 @@ function longestPath(matrix){
                 }
             }
             //Search Up
-            
             if( i > 0){
                 
                 let above = startArray[i-1][j]
                 if( above !== null){ 
-                    currentRow[j] += above 
+                    // console.log(startArray)
+                    currentRow[j] += Math.max(...startArray[i-1]) 
                 }
                 else{
                     let maxInRange = Math.max(...currentRow.slice(left + 1 , right - 1))
                     currentRow[j] = Math.max(currentRow[j], maxInRange)
                 }
             }
-
+            
+            // console.log(startArray)
         }
         
     }
     let solution = Math.max(...startArray[startArray.length - 1])
-    console.log(startArray)
+    // console.log(startArray)
     if(solution === 1) return [-1,-1]
     return solution;
 }
 
-// [0,0,1,1,0]
-// [0,0,1,1,0]
-// [1,0,0,1,1]
-// [1,1,0,1,1]
-// [0,0,0,1,1]
+// [0,0,#,#,0]
+// [0,0,#,#,0]
+// [#,0,0,#,#]
+// [#,#,0,#,#]
+// [0,0,0,#,#]
 
-console.log(longestPath([ [0,0,'#','#',0], [0,0,'#','#',0], ['#',0,0,'#',0], ['#','#',0,'#',0], [0,0,0,"#","#"]])) // -> 4
-console.log(longestPath([ [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0]]))
+// [ 1, null, null, 2, 2 ],
+// [ 6,   6,    6, 7, 7 ],
+// [ 8,  8, null, 9, 9 ],
+// [ 13, 13, 13, 14, 14 ],
+// [ 18, 18, 18, 19, 19 ]
 
+let example = [
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], 
+    [1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1], 
+    [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+    [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0], 
+    [0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1], 
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], 
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+    [1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1], 
+    [0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0], 
+    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0], 
+    [1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1], 
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], 
+    [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], 
+    [1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1], 
+    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0], 
+    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 
+  0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], [0, 1, 1, 1, 1, 0, 0, 
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 
+  0], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 
+  0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 
+  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0], [0, 1, 1, 0, 1, 
+  1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1,
+   1, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+   0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0,
+   0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 1,
+   1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 
+  1, 1, 1, 1], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 
+  1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 
+  1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0,
+   1, 1, 1, 1, 1], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+   0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0, 0,
+   0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0], [1,
+   1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 
+  0, 1, 1, 0, 1, 1, 0], [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+
+
+// function longestPath(grid) {
+// 	// edge cases
+//   // return 0 if top row is all #'s or bottom row is all #'s
+//   const pathLengths = [];
+  
+//   for (let i = 0; i < grid[0].length; i++) { // O(cols)
+//   	if (grid[0][i] === 0) {
+//         const visited = new Set();
+//     	countPath(0, i , grid, pathLengths, visited, 1);
+//     }
+//   }
+//   console.log(pathLengths)
+//   return Math.max(...pathLengths);
+// }
+
+
+// function countPath(row, col, grid, pathLengths, visited, count) {
+// 	// stop when no more directions left
+//   if (visited.has(`${row}.${col}`) ||
+//   	row - 1 < 0 || grid[row-1][col] === '#' || // top 
+//   	col - 1 < 0 || grid[row][col-1] === '#' || // left
+//     row + 1 >= grid.length || grid[row+1][col] === '#' || // bottom
+//     col + 1 >= grid[0].length || grid[row][col+1] !== '#') { // right
+
+//     pathLengths.push(count);
+//     return;
+//   }
+  
+//   visited.add(`${row}.${col}`);
+
+//   if (row - 1 >= 0 && grid[row-1][col] !== '#') countPath(row - 1, col, grid, pathLengths,visited, count + 1); // top
+//   if (col - 1 >= 0 && grid[row][col-1] !== '#') countPath(row, col - 1, grid, pathLengths,visited, count + 1); // left
+//   if (row + 1 < grid.length && grid[row+1][col] !== '#') countPath(row + 1, col, grid, pathLengths,visited, count + 1); // bottom
+//   if (col + 1 < grid[0].length && grid[row][col+1] !== '#') countPath(row, col + 1, grid, pathLengths,visited, count + 1); // right
+// }
+
+
+
+// console.log(longestPath([ 
+//     [ 0,  0,'#','#',0], 
+//     [ 0,  0,'#','#',0], 
+//     ['#', 0, 0,'#',0], 
+//     ['#','#',0,'#',0], 
+//     [0,   0, 0,"#","#"]
+// ])) // -> 4
+// console.log(longestPath([ 
+//     [0,'#','#', 0,0], 
+//     [0, 0,  0,  0,0], 
+//     [0, 0,' #', 0,0], 
+//     [0, 0,  0,  0,0], 
+//     [0, 0  ,0,  0,0]]))
+
+// console.log(longestPath( [  
+//     ['#', 0,  0,   0 ,  0],
+//     ['#', 0,  0,   0,   0],
+//     ['#','#', 0,  '#',  0],
+//     ['#','#', 0,  '#',  0],
+//     [0,   0,  0,  '#','#']
+// ]))
+
+// console.log(longestPath(example))
+
+// console.log(longestPath( [  
+//     ['#', 0,  0,   0 ,  0],
+//     ['#','#', '#','#', 0],
+//     [ 0,   0,  0, '#',  0],
+//     [ 0, '#',  0,  0,   0],
+//     [ 0,  0,  '#', '#','#']
+// ]))
+
+
+
+
+// function budgetCuts(salaries, newBudget){
+//     let lower = 0;
+//     let upper = Math.max(...salaries);
+
+//     let mid = Math.floor(upper/2);
+
+//     let sum = 0;
+//     while(true){
+//         sum = 0;
+//         for( let i = 0; i < salaries.length; i++){
+//             let currentSalary = salaries[i]
+//             if( currentSalary >= mid){
+//                 sum += mid
+//             }else{
+//                 sum += currentSalary
+//             }
+//         }
+        // console.log(`${i}: ------`)
+        // console.log(`Sum:${sum}`)
+
+        // console.log(`Lower:${lower}`)
+        // console.log(`Mid:${mid}`)
+        // console.log(`Upper:${upper}`)
+
+//         if( sum > newBudget){
+//             upper = mid
+//             mid = Math.floor((upper +lower)/ 2)
+//         }else if ( sum < newBudget){
+//             lower = mid
+//             mid = Math.floor((upper + lower) / 2)
+//         }else{
+//             break;
+//         }
+
+//         i++
+//     }
+
+//     return mid;
+// }
+// console.log('*******************************************************')
+// console.log(`Answer: ${budgetCuts([100, 300, 200, 400], 800)}`)
+// console.log('*******************************************************')
+// console.log(`Answer: ${budgetCuts([2,100,50,120,1000], 190)}`)
+// console.log(budgetCuts([100, 300, 200, 400,700,1000], 800))
+// budgetCuts([100, 300, 200, 400], 800)
+// Output: 250
+// Explanation: k should be 250, so the total salary after the reduction 100 + 250 + 200 + 250 is exactly equal to 800.
+
+// function fib(n){
+//     if (n === 0) return 0;
+//     if (n === 1) return 1;
+//     return fib(n-1) + fib(n-2)
+// }
+
+function fib(n, memo={'1':1, '2': 1}){
+    if( n in memo) return memo[n]
+    memo[n] = fib(n - 1, memo) + fib( n - 2, memo)
+    console.log(memo)
+    return memo[n]
+}
+
+// console.log(fib(15))
+
+// console.log(fib(30))
+
+// console.log(fib(45))
+
+// console.log(fib(100))
