@@ -52,69 +52,154 @@
 //     [ 1,  1,  '#', '#','#']
 // ]))
 
-function longestPath(matrix){
-    let startArray = new Array(matrix.length).fill().map( u => new Array(matrix[0].length).fill(null) )
-    for(let i = 0; i < matrix.length; i++){
-        let currentRow = startArray[i]
-        for( let j = 0; j < currentRow.length; j++){
-            let currentInMatrix = matrix[i][j]
-            if( currentInMatrix === 0 ) startArray[i][j] = 1
+// function longestPath(matrix){
+//     let startArray = new Array(matrix.length).fill().map( u => new Array(matrix[0].length).fill(null) )
+//     for(let i = 0; i < matrix.length; i++){
+//         let currentRow = startArray[i]
+//         for( let j = 0; j < currentRow.length; j++){
+//             let currentInMatrix = matrix[i][j]
+//             if( currentInMatrix === 0 ) startArray[i][j] = 1
 
-        }
-    }
-    // console.log(startArray)
+//         }
+//     }
+//     // console.log(startArray)
 
-    for( let i = 0; i < startArray.length; i++){
-        let currentRow = startArray[i]
-        for(let j = 0; j < startArray[0].length; j++){
-            let currentEle = currentRow[j]
-            if(currentEle === null) continue;
-            //Search Left
-            let left = j - 1
-            while(left >= 0){
-                let currentEle = currentRow[left]
-                if(currentEle === null){
-                    break
-                }else{
+//     for( let i = 0; i < startArray.length; i++){
+//         let currentRow = startArray[i]
+//         for(let j = 0; j < startArray[0].length; j++){
+//             let currentEle = currentRow[j]
+//             if(currentEle === null) continue;
+//             //Search Left
+//             let left = j - 1
+//             while(left >= 0){
+//                 let currentEle = currentRow[left]
+//                 if(currentEle === null){
+//                     break
+//                 }else{
 
-                    currentRow[left] += 1
-                    left--
-                }
-            }
-            //Search Right
-            let right = j + 1
-            while(right < currentRow.length){
-                let currentEle = currentRow[right]
-                if(currentEle === null){
-                    break;
-                }else{
+//                     currentRow[left] += 1
+//                     left--
+//                 }
+//             }
+//             //Search Right
+//             let right = j + 1
+//             while(right < currentRow.length){
+//                 let currentEle = currentRow[right]
+//                 if(currentEle === null){
+//                     break;
+//                 }else{
 
-                    currentRow[right] += 1
-                    right++
-                }
-            }
-            //Search Up
-            if( i > 0){
+//                     currentRow[right] += 1
+//                     right++
+//                 }
+//             }
+//             //Search Up
+//             if( i > 0){
                 
-                let above = startArray[i-1][j]
-                if( above !== null){ 
-                    // console.log(startArray)
-                    currentRow[j] += Math.max(...startArray[i-1]) 
-                }
-                else{
-                    let maxInRange = Math.max(...currentRow.slice(left + 1 , right - 1))
-                    currentRow[j] = Math.max(currentRow[j], maxInRange)
-                }
-            }
+//                 let above = startArray[i-1][j]
+//                 if( above !== null){ 
+//                     // console.log(startArray)
+//                     currentRow[j] += Math.max(...startArray[i-1]) 
+//                 }
+//                 else{
+//                     let maxInRange = Math.max(...currentRow.slice(left + 1 , right - 1))
+//                     currentRow[j] = Math.max(currentRow[j], maxInRange)
+//                 }
+//             }
             
-            // console.log(startArray)
-        }
+//             // console.log(startArray)
+//         }
         
+//     }
+//     let solution = Math.max(...startArray[startArray.length - 1])
+//     // console.log(startArray)
+//     if(solution === 1) return [-1,-1]
+//     return solution;
+// }
+
+// function longestPath(matrix) {
+//     let max = -1;
+  
+//     function dfs(x, y, length = 0, visiteds={}) {
+    
+//         // visiteds key format = `${x}, ${y}`
+//         if (visiteds[`${x}, ${y}`]) return;
+        
+//         let currVisits = {}
+//         for( prop in visiteds){
+
+//         }
+        
+//         let a = x + 1;
+//         let b = x - 1;
+//         let c = y + 1;
+//         let d = y - 1;
+        
+//         if ( (visiteds[`${a}, ${y}`] || a < 0 || a > matrix.length - 1) && 
+//              visiteds[`${b}, ${y}`] ||
+//              visiteds[`${x}, ${c}`] ||
+//              visiteds[`${x}, ${d}`]
+//             ){
+//             if (y === matrix[0].length - 1 && length > max) {
+//                 max = length
+//             }
+//             return
+//             }
+//         else if ((!visiteds[`${a}, ${y}`] && a >= 0 && a < matrix.length))
+//             dfs(a, y, dirs, length + 1, visiteds)
+//             visiteds = currVisits;
+        
+//             b, y,
+//             x, c
+//             x, d
+//             return;    
+//     }
+  
+//     //iterating through first row of matrix
+//     for (let i = 0; i < matrix[0].length; i++) { 
+//       dfs(0, i);
+//     }
+  
+//   return max;
+// }
+
+
+function longestPath(matrix){
+
+    let max = -1
+    
+    for( let i = 0; i < matrix[0].length; i++){
+        if( matrix[0][i] === 0){
+            DFS(0, i, 1)
+        }
     }
-    let solution = Math.max(...startArray[startArray.length - 1])
-    // console.log(startArray)
-    if(solution === 1) return [-1,-1]
-    return solution;
+
+    function DFS(x, y, length, visited = new Set()){
+
+        if( visited.has(`${x} : ${y}`) ) return;
+        let nextVisited = new Set(visited)
+        nextVisited.add(`${x} : ${y}`)
+
+        let bottom = matrix.length - 1
+        if( x === bottom){
+            max = Math.max(max, length)
+        }
+
+        let left = y - 1
+        let right = y + 1
+        let up = x - 1
+        let down = x + 1
+        
+        if( matrix[x]    && matrix[x][left]  === 0 ) DFS(x, left, length + 1, nextVisited);
+        if( matrix[x]    && matrix[x][right] === 0 ) DFS(x, right, length + 1, nextVisited);
+        if( matrix[up]   && matrix[up][y]    === 0 ) DFS(up, y, length + 1, nextVisited);
+        if( matrix[down] && matrix[down][y]  === 0 ) DFS(down, y, length + 1, nextVisited);
+
+    }
+
+
+    return max
+
 }
 
 // [0,0,#,#,0]
@@ -145,27 +230,22 @@ let example = [
     [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], 
     [1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1], 
     [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0], 
-    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 
-  0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], [0, 1, 1, 1, 1, 0, 0, 
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 
-  0], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 
-  0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 
-  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0], [0, 1, 1, 0, 1, 
-  1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1,
-   1, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0,
-   0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0,
-   0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 1,
-   1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 
-  1, 1, 1, 1], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 
-  1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 
-  1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0,
-   1, 1, 1, 1, 1], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
-   0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0, 0,
-   0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0], [1,
-   1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 
-  0, 1, 1, 0, 1, 1, 0], [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], 
+    [0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0], 
+    [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], 
+    [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0], 
+    [0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0], 
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], 
+    [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], 
+    [0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1], 
+    [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], 
+    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+    [0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1], 
+    [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], 
+    [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0],
+    [1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0], 
+    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
 
 
 
@@ -207,37 +287,38 @@ let example = [
 
 
 
-// console.log(longestPath([ 
-//     [ 0,  0,'#','#',0], 
-//     [ 0,  0,'#','#',0], 
-//     ['#', 0, 0,'#',0], 
-//     ['#','#',0,'#',0], 
-//     [0,   0, 0,"#","#"]
-// ])) // -> 4
-// console.log(longestPath([ 
-//     [0,'#','#', 0,0], 
-//     [0, 0,  0,  0,0], 
-//     [0, 0,' #', 0,0], 
-//     [0, 0,  0,  0,0], 
-//     [0, 0  ,0,  0,0]]))
+console.log(longestPath([ 
+    [ 0,  0,'#','#',0], 
+    [ 0,  0,'#','#',0], 
+    ['#', 0, 0,'#',0], 
+    ['#','#',0,'#',0], 
+    [0,   0, 0,"#","#"]
+])) // -> 4
+console.log(longestPath([ 
+    [0,'#', 0, '#',0], 
+    [0, 0,  0,  0, 0], 
+    [0, 0, '#', 0, 0], 
+    [0, 0,  0,  0, 0], 
+    [0, 0  ,0,  0, 0]
+ ]))
 
-// console.log(longestPath( [  
-//     ['#', 0,  0,   0 ,  0],
-//     ['#', 0,  0,   0,   0],
-//     ['#','#', 0,  '#',  0],
-//     ['#','#', 0,  '#',  0],
-//     [0,   0,  0,  '#','#']
-// ]))
+console.log(longestPath( [  
+    ['#', 0,  0,   0 ,  0],
+    ['#', 0,  0,   0,   0],
+    ['#','#', 0,  '#',  0],
+    ['#','#', 0,  '#',  0],
+    [0,   0,  0,  '#','#']
+]))
 
 // console.log(longestPath(example))
 
-// console.log(longestPath( [  
-//     ['#', 0,  0,   0 ,  0],
-//     ['#','#', '#','#', 0],
-//     [ 0,   0,  0, '#',  0],
-//     [ 0, '#',  0,  0,   0],
-//     [ 0,  0,  '#', '#','#']
-// ]))
+console.log(longestPath( [  
+    ['#', 0,   0,  0 ,  0],
+    ['#','#', '#','#',  0],
+    [ 0,  0,   0, '#',  0],
+    [ 0, '#',  0,  0,   0],
+    [ 0,  0,  '#','#', '#']
+]))
 
 
 
