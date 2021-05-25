@@ -1,4 +1,4 @@
-// Two Sum
+// ! Two Sum
 
 // Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 // You may assume that each input would have exactly one solution, and you may not use the same element twice.
@@ -19,8 +19,37 @@ function twoSum(array, target){
     }
 }
 
-console.log('--------- Two Sum ----------')
-console.log(twoSum([2,7,11,15], 9)) // -> [0,1]
-console.log(twoSum([3,2,4], 6)) // -> [1,2]
-console.log(twoSum([3,3], 6)) // -> [0,1]
-console.log('-----------------------------')
+// console.log('--------- Two Sum ----------')
+// console.log(twoSum([2,7,11,15], 9)) // -> [0,1]
+// console.log(twoSum([3,2,4], 6)) // -> [1,2]
+// console.log(twoSum([3,3], 6)) // -> [0,1]
+// console.log('-----------------------------')
+
+// ! Best Time to Buy and Sell Stock
+
+// You are given an array prices where prices[i] is the price of a given stock on the ith day.
+// You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+// Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+function maxProfit(array){
+    let minPrice = array[0]
+
+    let profit = 0;
+
+    for( let i = 1; i < array.length; i++){
+        let current = array[i]
+        minPrice = Math.min(current,minPrice)
+        if(current > minPrice){
+            // console.log(current)
+            // console.log(minPrice)
+            profit = Math.max(profit, current - minPrice)
+        }
+    }
+
+
+
+    return profit
+}
+
+console.log(maxProfit([7,1,5,3,6,4])) // -> 5
+console.log(maxProfit([7,6,4,3,1])) // -> 0
