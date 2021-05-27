@@ -75,3 +75,25 @@ function containsDuplicate(array){
 // console.log(containsDuplicate([1,2,3,1])) // True
 // console.log(containsDuplicate([1,2,3,4])) // False
 // console.log(containsDuplicate([1,1,1,3,3,4,3,2,4,2])) // True
+
+
+
+// ! Product of Array Except Self
+
+// Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+// The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+// You must write an algorithm that runs in O(n) time and without using the division operation.
+
+
+
+console.log(productExceptSelf([1,2,3,4])) // -> [24,12,8,6]
+console.log(productExceptSelf([-1,1,0,-3,3])) // -> [0,0,9,0,0]
+
+
+// ! Maximum sub Array
+
+// Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+
+console.log(maxSubArray([-2,1,-3,-4,-1,2,1,-5,4])) // 6
+console.log(maxSubArray([1])) // 1
+console.log(maxSubArray([5,4,-1,7,8])) // 23
