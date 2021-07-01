@@ -190,10 +190,10 @@ function longestPath(matrix){
         let up = x - 1
         let down = x + 1
         
-        if( matrix[x]    && matrix[x][left]  === 0 ) DFS(x, left, length + 1, nextVisited);
-        if( matrix[x]    && matrix[x][right] === 0 ) DFS(x, right, length + 1, nextVisited);
-        if( matrix[up]   && matrix[up][y]    === 0 ) DFS(up, y, length + 1, nextVisited);
-        if( matrix[down] && matrix[down][y]  === 0 ) DFS(down, y, length + 1, nextVisited);
+        if( matrix[x]    && matrix[x][left]  === 0 ) DFS(   x,  left,  length + 1, nextVisited);
+        if( matrix[x]    && matrix[x][right] === 0 ) DFS(   x, right,  length + 1, nextVisited);
+        if( matrix[up]   && matrix[up][y]    === 0 ) DFS(  up,     y,  length + 1, nextVisited);
+        if( matrix[down] && matrix[down][y]  === 0 ) DFS(down,     y,  length + 1, nextVisited);
 
     }
 
@@ -320,6 +320,13 @@ console.log(longestPath( [
     [ 0,  0,  '#','#', '#']
 ]))
 
+[  
+    ['#', 0,   0,  0 ,  0 ],
+    ['#','#', '#','#',  0 ],
+    [ 0,  0,   0, '#',  0 ],
+    [ 0, '#',  0,  0,   0 ],
+    [ 0,  0,  '#','#', '#']
+]
 
 
 

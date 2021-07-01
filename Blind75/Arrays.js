@@ -85,6 +85,13 @@ function containsDuplicate(array){
 // You must write an algorithm that runs in O(n) time and without using the division operation.
 
 
+function productExceptSelf(array){
+
+
+    return false;
+}
+
+
 
 console.log(productExceptSelf([1,2,3,4])) // -> [24,12,8,6]
 console.log(productExceptSelf([-1,1,0,-3,3])) // -> [0,0,9,0,0]
@@ -94,6 +101,20 @@ console.log(productExceptSelf([-1,1,0,-3,3])) // -> [0,0,9,0,0]
 
 // Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
 
-console.log(maxSubArray([-2,1,-3,-4,-1,2,1,-5,4])) // 6
-console.log(maxSubArray([1])) // 1
-console.log(maxSubArray([5,4,-1,7,8])) // 23
+// console.log(maxSubArray([-2,1,-3,-4,-1,2,1,-5,4])) // 6
+// console.log(maxSubArray([1])) // 1
+// console.log(maxSubArray([5,4,-1,7,8])) // 23
+
+
+
+// !Maximum
+
+
+// Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product.
+// It is guaranteed that the answer will fit in a 32-bit integer.
+// A subarray is a contiguous subsequence of the array.
+
+
+// console.log(maxProduct([2,3,-2,4])) // 6
+// console.log(maxProduct([-2,0,-1])) // 0
+
