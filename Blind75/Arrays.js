@@ -80,21 +80,35 @@ function containsDuplicate(array){
 
 // ! Product of Array Except Self
 
-// Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+// Given an integer array nums, return an array answer such that answer[i]
+// is equal to the product of all the elements of nums except nums[i].
 // The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
 // You must write an algorithm that runs in O(n) time and without using the division operation.
 
 
 function productExceptSelf(array){
+    let resultArr = new Array(array.length).fill(1)
 
+    let currentNum = array[0]
+    for( let i = 1; i < array.length; i++){
+        resultArr[i] *= currentNum
+        currentNum *= array[i]
+    }
 
-    return false;
+    currentNum = array[array.length - 1]
+    for( let i = array.length - 2; i >= 0; i--){
+        resultArr[i] *= currentNum
+        currentNum *= array[i]
+    }
+    
+
+    return resultArr;
 }
 
 
-
-console.log(productExceptSelf([1,2,3,4])) // -> [24,12,8,6]
-console.log(productExceptSelf([-1,1,0,-3,3])) // -> [0,0,9,0,0]
+// console.log(productExceptSelf([4,5,1,8,2]))
+// console.log(productExceptSelf([1,2,3,4])) // -> [24,12,8,6]
+// console.log(productExceptSelf([-1,1,0,-3,3])) // -> [0,0,9,0,0]
 
 
 // ! Maximum sub Array
@@ -114,6 +128,9 @@ console.log(productExceptSelf([-1,1,0,-3,3])) // -> [0,0,9,0,0]
 // It is guaranteed that the answer will fit in a 32-bit integer.
 // A subarray is a contiguous subsequence of the array.
 
+function maxProduct(array){
+
+}
 
 // console.log(maxProduct([2,3,-2,4])) // 6
 // console.log(maxProduct([-2,0,-1])) // 0
