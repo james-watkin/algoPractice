@@ -113,18 +113,34 @@ function productExceptSelf(array){
 
 // ! Maximum sub Array
 
-// Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+// Given an integer array nums, find the contiguous subarray 
+// (containing at least one number) which has the largest sum 
+// and return its sum.
 
-// console.log(maxSubArray([-2,1,-3,-4,-1,2,1,-5,4])) // 6
-// console.log(maxSubArray([1])) // 1
-// console.log(maxSubArray([5,4,-1,7,8])) // 23
+function maxSubArray(array){
+    let prev = 0
+    let currentMax = -Infinity
+    // console.log(currentMax)
+    for( let i = 0; i < array.length ;i++) {
+        prev = Math.max(prev + array[i], array[i])
+        currentMax = Math.max(currentMax, prev)
+
+    }
+
+    return currentMax
+}
+
+console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4])) // 6
+console.log(maxSubArray([1])) // 1
+console.log(maxSubArray([5,4,-1,7,8])) // 23
 
 
 
-// !Maximum
+// ! Maximum
 
 
-// Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product.
+// Given an integer array nums, find a contiguous non-empty subarray 
+// within the array that has the largest product, and return the product.
 // It is guaranteed that the answer will fit in a 32-bit integer.
 // A subarray is a contiguous subsequence of the array.
 
@@ -132,6 +148,6 @@ function maxProduct(array){
 
 }
 
-// console.log(maxProduct([2,3,-2,4])) // 6
-// console.log(maxProduct([-2,0,-1])) // 0
+console.log(maxProduct([2,3,-2,4])) // 6
+console.log(maxProduct([-2,0,-1])) // 0
 
